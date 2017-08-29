@@ -1,0 +1,40 @@
+#!/bin/bash
+
+pushd . &>/dev/null
+cd $(dirname $0)
+
+backup_dir=$(pwd)/backup
+
+replace() {
+  filename=$1
+  dest_dir=$2
+
+  case "$#" in
+    1)
+      dest_dir=~
+      ;;
+    2)
+      ;;
+    *)
+      exit 1
+      ;;
+  esac
+
+  rm $backup_dir/$filename 2>/dev/null
+  cp -a $dest_dir/$filename $backup_dir/$filename 2>/dev/null
+  rm $dest_dir/$filename 2>/dev/null
+  ln -s $(pwd)/$filename $dest_dir/$filename
+}
+
+case "$1" in
+  --help|-h)
+    echo "options:"
+    exit 1
+    ;;
+esac
+
+mkdir old &>/dev/null
+
+replace ".gitconfig"
+
+popd &>/dev/null
