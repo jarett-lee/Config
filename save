@@ -30,4 +30,7 @@ fi
 cp ~/$filename $file_dir/$filename
 echo $filename >> $(pwd)/files.txt
 
+git add .
+git commit -m "Add $filename"
+
 popd
