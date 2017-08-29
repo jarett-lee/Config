@@ -10,7 +10,7 @@ cp_num() {
   local src=$1
   local dest_dir=$2
   local dest_name=$(date +"%Y-%m-%d")_$3
-  cp -a $src $dest_dir/$dest_name
+  cp -a "$src $dest_dir/$dest_name"
 }
 
 replace() {
@@ -28,18 +28,22 @@ replace() {
       ;;
   esac
 
-  # Check the file exists
-  if [ ! -f $file_dir/$filename ]; then
+  # Check the source file exists
+  if [ ! -f "$file_dir/$filename" ]; then
     echo "$filename not found!"
     exit 1
   fi
 
-  # Remove old backup and create a new one
-  cp_num $dest_dir/$filename $backup_dir $filename 2>/dev/null
+  # Create dated backup
+  if [ -f "$file_dir/$filename" ]; then
+    cp_num "$dest_dir/$filename" "$backup_dir" "$filename" 2>/dev/null
+  else
+    rm "$dest_dir/$filename"
+  fi
 
   # Replace the old file with a symlink to the files
-  rm $dest_dir/$filename 2>/dev/null
-  ln -s $file_dir/$filename $dest_dir/$filename
+  rm "$dest_dir/$filename" 2>/dev/null
+  ln -s "$file_dir/$filename" "$dest_dir/$filename"
 }
 
 case "$1" in
@@ -57,7 +61,7 @@ while read -a p; do
       replace "${p[0]}"
       ;;
     2)
-      replace "${p[0]}" "${p[0]}"
+      replace "${p[0]}" "${p[1]}"
       ;;
     *)
       ;;
