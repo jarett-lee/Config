@@ -4,6 +4,7 @@ pushd . &>/dev/null
 cd $(dirname $0)
 
 backup_dir=$(pwd)/backup
+file_dir=$(pwd)/files
 
 replace() {
   filename=$1
@@ -20,10 +21,13 @@ replace() {
       ;;
   esac
 
+  # Remove old backup and create a new one
   rm $backup_dir/$filename 2>/dev/null
   cp -a $dest_dir/$filename $backup_dir/$filename 2>/dev/null
+
+  # Replace the old file with a symlink to the files
   rm $dest_dir/$filename 2>/dev/null
-  ln -s $(pwd)/$filename $dest_dir/$filename
+  ln -s $file_dir/$filename $dest_dir/$filename
 }
 
 case "$1" in
