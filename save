@@ -20,6 +20,11 @@ case "$#" in
 esac
 
 filename=$(basename $1)
+src_dir=$(dirname $1)
+
+if [ "$src_dir" == "." ]; then
+  src_dir=~
+fi
 
 # Check the file exists in the config
 if [ -f $file_dir/$filename ]; then
@@ -27,6 +32,7 @@ if [ -f $file_dir/$filename ]; then
   exit 1
 fi
 
+filepath=$src_dir/$filename
 
 # Check the file exists in home
 if [ ! -f $filepath ]; then
@@ -34,7 +40,7 @@ if [ ! -f $filepath ]; then
   exit 1
 fi
 
-cp ~/$filename $file_dir/$filename
+cp $filepath $file_dir/$filename
 echo $filename >> $(pwd)/files.txt
 
 git add .
