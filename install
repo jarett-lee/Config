@@ -21,6 +21,12 @@ replace() {
       ;;
   esac
 
+  # Check the file exists
+  if [ ! -f $file_dir/$filename ]; then
+    echo "$filename not found!"
+    exit 1
+  fi
+
   # Remove old backup and create a new one
   rm $backup_dir/$filename 2>/dev/null
   cp -a $dest_dir/$filename $backup_dir/$filename 2>/dev/null
@@ -39,6 +45,9 @@ esac
 
 mkdir old &>/dev/null
 
-replace ".gitconfig"
+while read p; do
+  echo replace $p
+  replace $p
+done < files.txt
 
 popd &>/dev/null
