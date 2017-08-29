@@ -46,7 +46,6 @@ esac
 mkdir old &>/dev/null
 
 while read p; do
-  echo replace $p
   replace $p
 done < files.txt
 
