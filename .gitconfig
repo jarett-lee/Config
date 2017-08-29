@@ -1,0 +1,11 @@
+[user]
+	email = jarett.lee.pi@gmail.com
+	name = jarett-lee
+[core]
+	editor = vim
+[push]
+	default = simple
+[credential]
+	helper = cache --timeout=7200
+[alias]
+	overview = log --all --oneline --no-merges --invert-grep --grep='^Minor'
