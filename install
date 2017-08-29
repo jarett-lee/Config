@@ -45,8 +45,17 @@ esac
 
 mkdir old &>/dev/null
 
-while read p; do
-  replace $p
+while read -a p; do
+  case "${#p[@]}" in
+    1)
+      replace "${p[0]}"
+      ;;
+    2)
+      replace "${p[0]}" "${p[0]}"
+      ;;
+    *)
+      ;;
+  esac
 done < files.txt
 
 popd &>/dev/null
