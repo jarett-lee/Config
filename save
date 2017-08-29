@@ -11,7 +11,15 @@ case "$1" in
     ;;
 esac
 
-filename=$1
+case "$#" in
+  1)
+    ;;
+  *)
+    exit 1
+    ;;
+esac
+
+filename=$(basename $1)
 
 # Check the file exists in the config
 if [ -f $file_dir/$filename ]; then
@@ -19,7 +27,6 @@ if [ -f $file_dir/$filename ]; then
   exit 1
 fi
 
-filepath=~/$filename
 
 # Check the file exists in home
 if [ ! -f $filepath ]; then
