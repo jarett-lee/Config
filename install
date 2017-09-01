@@ -49,9 +49,13 @@ replace() {
 profile="default"
 do=replace
 
+# parse arguments
+while (( "$#" )); do
+
 case "$1" in
   --profile|-p)
     profile=$2
+    shift
     ;;
   --test|-t)
     do="echo $do"
@@ -61,6 +65,10 @@ case "$1" in
     exit 1
     ;;
 esac
+
+shift
+
+done
 
 profile="profiles/$profile.txt"
 
