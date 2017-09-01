@@ -71,7 +71,7 @@ echo $filename >> $profile
 
 if $commit; then
   git add .
-  git commit -m "Add $filename to $profileName"
+  git commit -m "Save $filename to $profileName"
 fi
 
 popd &>/dev/null
