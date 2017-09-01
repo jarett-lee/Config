@@ -64,6 +64,12 @@ esac
 
 profile="profiles/$profile.txt"
 
+# Check the profile exists
+if [ ! -f "$profile" ]; then
+  echo "$profile not found!"
+  exit 1
+fi
+
 mkdir old &>/dev/null
 
 while read -a p; do
