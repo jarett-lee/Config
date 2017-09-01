@@ -46,7 +46,12 @@ replace() {
   ln -s "$file_dir/$filename" "$dest_dir/$filename"
 }
 
+do=replace
+
 case "$1" in
+  --test|-t)
+    do="echo $do"
+    ;;
   --help|-h)
     echo "options:"
     exit 1
@@ -58,10 +63,10 @@ mkdir old &>/dev/null
 while read -a p; do
   case "${#p[@]}" in
     1)
-      replace "${p[0]}"
+      $do "${p[0]}"
       ;;
     2)
-      replace "${p[0]}" "${p[1]}"
+      $do "${p[0]}" "${p[1]}"
       ;;
     *)
       ;;
