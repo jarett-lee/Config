@@ -11,19 +11,33 @@ case "$1" in
     ;;
 esac
 
-case "$#" in
-  1)
-    ;;
-  *)
-    exit 1
-    ;;
-esac
-
 filename=$(basename $1)
 src_dir=$(dirname $1)
 
 if [ "$src_dir" == "." ]; then
   src_dir=~
+fi
+
+shift
+
+profile="default"
+
+case "$1" in
+  --profile|-p)
+    profile=$2
+    ;;
+  --help|-h)
+    echo "options:"
+    exit 1
+    ;;
+esac
+
+profile="profile/$profile.txt"
+
+# Check the profile exists
+if [ ! -f "$profile" ]; then
+  echo "$profile not found!"
+  exit 1
 fi
 
 # Check the file exists in the config
@@ -41,7 +55,7 @@ if [ ! -f $filepath ]; then
 fi
 
 cp $filepath $file_dir/$filename
-echo $filename >> $(pwd)/files.txt
+echo $filename >> $profile
 
 git add .
 git commit -m "Add $filename"
