@@ -20,11 +20,19 @@ fi
 
 shift
 
-profile="default"
+profileName="default"
+commit=false
+
+# parse arguments
+while (( "$#" )); do
 
 case "$1" in
   --profile|-p)
     profile=$2
+    shift
+    ;;
+  --commit|-f)
+    commit=true
     ;;
   --help|-h)
     echo "options:"
@@ -32,7 +40,11 @@ case "$1" in
     ;;
 esac
 
-profile="profile/$profile.txt"
+shift
+
+done
+
+profile="profiles/$profileName.txt"
 
 # Check the profile exists
 if [ ! -f "$profile" ]; then
@@ -57,7 +69,9 @@ fi
 cp $filepath $file_dir/$filename
 echo $filename >> $profile
 
-git add .
-git commit -m "Add $filename"
+if $commit; then
+  git add .
+  git commit -m "Add $filename to $profileName"
+fi
 
 popd &>/dev/null
