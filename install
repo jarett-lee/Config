@@ -46,9 +46,13 @@ replace() {
   ln -s "$file_dir/$filename" "$dest_dir/$filename"
 }
 
+profile="default"
 do=replace
 
 case "$1" in
+  --profile|-p)
+    profile=$2
+    ;;
   --test|-t)
     do="echo $do"
     ;;
@@ -57,6 +61,8 @@ case "$1" in
     exit 1
     ;;
 esac
+
+profile="profiles/$profile.txt"
 
 mkdir old &>/dev/null
 
@@ -71,6 +77,6 @@ while read -a p; do
     *)
       ;;
   esac
-done < files.txt
+done < $profile
 
 popd &>/dev/null
