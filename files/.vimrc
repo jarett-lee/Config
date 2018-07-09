@@ -1,3 +1,6 @@
+" set theme
+color desert
+
 " set make to F9
 map <F9> <ESC>:w <bar> :!make
 
