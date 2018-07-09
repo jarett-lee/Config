@@ -32,5 +32,8 @@ set ruler
 " displayed.
 nnoremap <silent> <Space> :silent noh<Bar>echo<CR>
 
-" Disable beeping
+" disable beeping
 set visualbell
+
+" tab settings
+set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
